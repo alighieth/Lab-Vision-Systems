@@ -10014,17 +10014,88 @@ Patch Size 4x4: Accuracy = 54.12%, Time = 1454.6s
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=20be198b-f116-434a-8391-6580e59b0faf">
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=20be198b-f116-434a-8391-6580e59b0faf">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span> 
-</pre></div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Comparison-of-Patch-Sizes-(Experiment-Results)">Comparison of Patch Sizes (Experiment Results)<a class="anchor-link" href="#Comparison-of-Patch-Sizes-(Experiment-Results)">¶</a></h3><table>
+<thead>
+<tr>
+<th style="text-align:left">Patch Size</th>
+<th style="text-align:left">Final Accuracy</th>
+<th style="text-align:left">Training Time</th>
+<th style="text-align:left">Analysis</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><strong>16x16</strong></td>
+<td style="text-align:left">48.91%</td>
+<td style="text-align:left">517.92s</td>
+<td style="text-align:left">Baseline; efficient but loses fine-grained detail.</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>8x8</strong></td>
+<td style="text-align:left">53.98%</td>
+<td style="text-align:left">1439.7s</td>
+<td style="text-align:left">Balanced trade-off; higher accuracy than 16x16.</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>4x4</strong></td>
+<td style="text-align:left">54.12%</td>
+<td style="text-align:left">1454.6s</td>
+<td style="text-align:left">Maximum detail; improved action recognition.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="Analysis">Analysis<a class="anchor-link" href="#Analysis">¶</a></h3><ul>
+<li><strong>Accuracy vs. Complexity:</strong> Decreasing patch size (e.g., from 16x16 to 4x4) consistently improves performance as it allows the model to process longer sequences and capture more precise spatial features.</li>
+<li><strong>Computational Trade-off:</strong> The 16x16 experiment demonstrated efficiency with a training time of 517.92 seconds. Smaller patches increase sequence length quadratically, which significantly raises memory and time requirements for the self-attention mechanism.</li>
+<li><strong>Performance Scaling:</strong> The KTH dataset, which relies on motion and spatial trajectories, typically benefits from the finer granularity provided by 4x4 or 8x8 patches, as these sizes better preserve the temporal-spatial edges of moving actors.</li>
+</ul>
 </div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=b63c9b94-e426-442b-ba0b-cfad291d6d9f">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Comparison:-ViT-vs.-Assignment-3-RNN">Comparison: ViT vs. Assignment 3 RNN<a class="anchor-link" href="#Comparison:-ViT-vs.-Assignment-3-RNN">¶</a></h3><table>
+<thead>
+<tr>
+<th style="text-align:left">Model Architecture</th>
+<th style="text-align:left">Best Accuracy</th>
+<th style="text-align:left">Key Observation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><strong>RNN (Assignment 3)</strong></td>
+<td style="text-align:left">~45-50%</td>
+<td style="text-align:left">High spatial information loss due to vector flattening.</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>ViT (4x4)</strong></td>
+<td style="text-align:left">54.12%</td>
+<td style="text-align:left">Superior performance due to spatial-temporal feature preservation.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="Analysis-&amp;-Improvements">Analysis &amp; Improvements<a class="anchor-link" href="#Analysis-&amp;-Improvements">¶</a></h3><ul>
+<li><strong>Performance Difference:</strong> ViT 4x4 outperformed the Assignment 3 RNN baseline, largely because the RNN's flattening process destroys local pixel relationships, whereas ViT maintains spatial grid integrity.</li>
+<li><strong>Potential Improvements:</strong><ul>
+<li><strong>Inductive Bias:</strong> Prepend a shallow CNN (e.g., ResNet-style) to the ViT encoder to learn spatial hierarchies more efficiently.</li>
+<li><strong>Temporal Regularization:</strong> Apply temporal jittering to improve generalization against varying action speeds.</li>
+<li><strong>Positional Encoding:</strong> Utilize relative positional embeddings to enhance sequence handling.</li>
+</ul>
+</li>
+</ul>
 </div>
 </div>
 </div>
